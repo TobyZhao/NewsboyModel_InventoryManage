@@ -1,7 +1,7 @@
 library(lattice)  
 
-data = read.table("E:\\data.csv", sep = ",");    	# directory of the demand table
-values = as.numeric(unlist(data[1])); 				    # read demand values
+data = read.table("E:\\data.csv", sep = ",");     # directory of the demand table
+values = as.numeric(unlist(data[1]));             # read demand values
 probs = as.numeric(unlist(data[2]));  				    # read probability
 
 # routine: inventory
