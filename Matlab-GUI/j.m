@@ -83,7 +83,7 @@ ss=str2num(ss);
 bb=get(handles.edit2,'string');
 bb=str2num(bb);
 
-diary a.txt     % hard to implement interface from GUI to command. record command using files
+diary a.txt     % hard to implement interface from GUI to command; record command using files
 %diary log.txt
 news(bb,ss);
 diary off
