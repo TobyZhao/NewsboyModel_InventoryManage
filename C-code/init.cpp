@@ -2,35 +2,33 @@
 #include "first.h"
 
 /****************************************************************
-* 函数名： 	init()												*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：对相关变量进行初始化，对于单个策略仅运行一次。 		*
+* funtion:		init()					*
+* input:		void					*
+* output:		void					*
+* description:		initialization for variables		*
 /***************************************************************/
 void init()
 {
-	time=0;
-	invlev=initil;
-	tlevent=0;
-	amount=0;
-	money=0;
-
-	tordc=0;
-	aplus=0;
-	aminus=0;
-	tne[1]=999999999;
-	tne[2]=expon(mdemdt);
-	tne[3]=nmnths;
-	tne[4]=0;
+	time = 0;
+	invlev = initil;
+	tlevent = 0;
+	amount = 0;
+	money = 0;
+	tordc = 0;
+	aplus = 0;
+	aminus = 0;
+	tne[1] = 999999999;
+	tne[2] = expon(mdemdt);
+	tne[3] = nmnths;
+	tne[4] = 0;
 	return;
-
 }
 
 /****************************************************************
-* 函数名： 	timing()											*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：找到下一刻发生的事件，并更新时间			 		*
+* funtion:		timing()				*
+* input:		void					*
+* output:		void					*
+* description:		find next event and update timeline	*
 /***************************************************************/
 void timing()
 {
