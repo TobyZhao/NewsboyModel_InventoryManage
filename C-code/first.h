@@ -1,24 +1,24 @@
 #include <stdlib.h>
 #include <math.h>
 /****************************************************************
-*				parameters				*
-*	amount:			amount of order				*
-*	bigs:			maximum inventory			*
-*	initil: 		initial inventory			*
-*	invlev:			dynamic inventory			*
-*	nevnts: 		number of events			*
-*	next:			next event				*
-*	nmnths:			simulation time (month)			*
-*	smalls:			minimum inventory			*
-*	npolcy:			number of policies			*
-*	nvalue:			demands					*
-*	p1:			cost for stockout - p1/item		*										*
-*	pro[]:			probability density for demands		*
-*	mdemdt:			average interval time of demands	*
-*	setupc:			setup cost				*
-*	incrmc:			order cost - incremc/item		*
-*	H:			storage cost - h/item/month		*
-*	tne[]: 			timeline				*
+*			parameters				*
+*	amount:		amount of order				*
+*	bigs:		maximum inventory			*
+*	initil: 	initial inventory			*
+*	invlev:		dynamic inventory			*
+*	nevnts: 	number of events			*
+*	next:		next event				*
+*	nmnths:		simulation time (month)			*
+*	smalls:		minimum inventory			*
+*	npolcy:		number of policies			*
+*	nvalue:		demands					*
+*	p1:		cost for stockout - p1/item		*										*
+*	pro[]:		probability density for demands		*
+*	mdemdt:		average interval time of demands	*
+*	setupc:		setup cost				*
+*	incrmc:		order cost - incremc/item		*
+*	H:		storage cost - h/item/month		*
+*	tne[]: 		timeline				*
 /***************************************************************/
 int amount, bigs, initil = 60, invlev, nevnts = 4, next, nmnths = 120, smalls, I, npolcy = 4;
 int nvalue = 4, i, p1 = 5, small1[20], big1[20];
@@ -28,34 +28,34 @@ double aminus, aplus, tlevent, tordc, time;
 double acost[20], ahldc[20], aordc[20], ashrc[20], pri[20];
 
 /****************************************************************
-* 函数名： 	drand()												*
-* 输入参数： double z											*
-* 输出参数： double												*
-* 函数功能：产生0~Z的连续随机数							 		*
+* function:		drand()					*
+* input:		double z				*
+* output:		double					*
+* description:		create random number between 0 to z	*
 /***************************************************************/
 double drand(double z)
 {
-	double a=rand()%10000;
-	a=a/10000;
-	return a*z;
+	double a = rand() % 10000;
+	a = a / 10000;
+	return a * z;
 }
 
 /****************************************************************
-* 函数名： 	irandi()											*
-* 输入参数： int												*
-* 输出参数： int												*
-* 函数功能：产生随机需求。根据0~1的连续随机数结合分布概率生成	*
+* function:		irandi()				*
+* input:		int z					*
+* output:		int					*
+* description:		create random demands			*
 /***************************************************************/
 int irandi(int z)
 {
-	int i,n1,res=1;
-	double u=drand(z);
-	n1=nvalue-1;
-	for (i=1;i<=n1;i++)
+	int i, n1, res = 1;
+	double u = drand(z);
+	n1 = nvalue - 1;
+	for (i = 1; i <= n1; i++)
 	{
-		if(u>= pro[i])
+		if(u >= pro[i])
 		{
-			res=i+1;
+			res = i + 1;
 		}
 
 	}
