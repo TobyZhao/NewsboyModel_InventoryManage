@@ -43,7 +43,7 @@ int main()
 				break;
 			case 2:	demand();
 				break;
-			case 3:	report(i);flag = 1;
+			case 3:	report(i); flag = 1;
 				break;
 			case 4:	evalus();
 				break;
