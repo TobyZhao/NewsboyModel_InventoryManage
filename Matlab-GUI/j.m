@@ -83,12 +83,12 @@ ss=str2num(ss);
 bb=get(handles.edit2,'string');
 bb=str2num(bb);
 
-diary a.txt   %难以实现gui到command的接口，采用文件记录command作为缓存
+diary a.txt     % hard to implement interface from GUI to command. record command using files
 %diary log.txt
 news(bb,ss);
 diary off
 n='Report';
-fid=fopen('a.txt','rt'); %读取文件，并进行格式化输出；
+fid=fopen('a.txt','rt');      % read files and printout in format
 A=fgetl(fid);
 set(handles.text11,'string',A);
 A=fgetl(fid);
@@ -185,7 +185,7 @@ function About_Callback(hObject, eventdata, handles)
 % hObject    handle to About (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-msgbox({'               库存仿真 ';'';'                 许琮维'},'关于','modal');
+msgbox({'               inventory simulation ';'';'                 Toby'},'about','modal');
 
 
 % --------------------------------------------------------------------
