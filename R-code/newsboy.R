@@ -51,7 +51,7 @@ inventory = function(s,S){
       t1 = Inf;                                 # set next deilivery time to infinity
     }  
     D = sample(values, 1, T, probs);           	# random demands
-    w = min(D, invlev)                       	  # actual purchases
+    w = min(D, invlev)                          # actual purchases
     R = R + r * w;  
     
     # if demands above inventory
@@ -80,7 +80,7 @@ S2 = 100;
 imax = (s2 - s1 + 1) * (S2 - S1 + 1);
 s <- s1 : s2  
 S <- S1 : S2  
-data <- expand.grid(s, S)                           # combine s and S for plotting
+data <- expand.grid(s, S)                         # combine s and S for plotting
 
 # average 10 times for each combination (s, S)
 for (i in 1 : imax) {  
