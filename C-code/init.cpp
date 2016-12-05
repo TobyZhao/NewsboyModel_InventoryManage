@@ -33,113 +33,116 @@ void init()
 void timing()
 {
 	double rmin;
-	rmin=1e+29;
-	next=0;
-	for (i=1;i<=nevnts;i++)
+	rmin = 1e+29;
+	next = 0;
+	for (i = 1; i <= nevnts; i++)
 	{
-		if(tne[i]>=rmin)
+		if(tne[i] >= rmin)
 			continue;
-		rmin=tne[i];
-		next=i;
+		rmin = tne[i];
+		next = i;
 	}
-	if(next>0)
-		time=tne[next];
+	if(next > 0)
+		time = tne[next];
 	else
-		printf("next=0,error!");
+		printf("next = 0, error!");
 	return;
-
 }
 
 /****************************************************************
-* 函数名： 	ordarv()											*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：描述订货事件（已完成）。首先更新库存，再更新时间轴	 		*
+* funtion:		ordarv()				*
+* input:		void					*
+* output:		void					*
+* description:		order event. first update inventory,	* 
+			then update timeline			*
 /***************************************************************/
 void ordarv()
 {
 	update();
-	invlev+=amount;
-	money+=amount*price;
-	tne[1]=999999999;
-	//printf("ordarv->invlev	amount : %d  %d\n ",invlev,amount);
+	invlev += amount;
+	money += amount * price;
+	tne[1] = 999999999;
+	//printf("ordarv -> invlev  amount: %d  %d\n", invlev, amount);
 	return;
 }
 
 /****************************************************************
-* 函数名： 	demand()											*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：描述需求事件。首先生成随机需求，再更新时间轴 		*
+* funtion:		demand()				*
+* input:		void					*
+* output:		void					*
+* description:		demand event. first create random	*
+			demands, then update timeline		*
 /***************************************************************/
 void demand()
 {
 	update();
 	double dsize;
-	dsize=irandi(z);
-	invlev-=dsize;
-	tne[2]=time+expon(mdemdt);
+	dsize = irandi(z);
+	invlev -= dsize;
+	tne[2] = time + expon(mdemdt);
 	return;
 }
 
 /****************************************************************
-* 函数名： 	evalus()											*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：描述订货事件。首先判断是否要定，若要则计算订货数 	*
-*           在更新时间轴，其中货物到达时间为随机数。			*
+* funtion:		evalus()				*
+* input:		void					*
+* output:		void					*
+* description:		order event. first decide whether to	*
+			order. If yes, compute order amount	*
+			and update timeline			*
 /***************************************************************/
 void evalus()
 {
 	//printf("!!!!!!!enter evalus\n");
 	if (invlev >= smalls)
 	{
-		tne[4]=time+1.0;
-		//printf("time to order  %0.f, and amount is %d\n",time,amount);
+		tne[4] = time + 1.0;
+		//printf("time to order %0.f, and amount is %d\n", time, amount);
 		return;
 	}
-	amount=bigs-invlev;
-	tordc+=setupc+(incrmc*amount);
-	//printf("time to order  %0.f, and amount is %d\n",time,amount);
-	tne[4]=time+1.0;
-	tne[1]=time+unifrm(0.5,1.0);
-
+	amount = bigs - invlev;
+	tordc += setupc + (incrmc * amount);
+	//printf("time to order %0.f, and amount is %d\n", time, amount);
+	tne[4] = time + 1.0;
+	tne[1] = time + unifrm(0.5, 1.0);
+	
 	return;
 }
 
 /****************************************************************
-* 函数名： 	report()											*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：当仿真时间结束时，计算各项花费等，并格式化输出 		*
+* funtion:		report()				*
+* input:		int indx				*
+* output:		void					*
+* description:		compute costs and printout when		*
+			simulation finishes			*
 /***************************************************************/
 void report(int indx)
 {
 
 	int j;
 	update();
-	aordc[indx]=tordc/nmnths;
-	ahldc[indx]=H*(aplus/nmnths);
-	ashrc[indx]=p1*(aminus/nmnths);
-	acost[indx]=aordc[indx]+ahldc[indx]+ashrc[indx];
-	small1[indx]=smalls;
-	big1[indx]=bigs;
-	pri[indx]=money+(initil-invlev)*price-acost[indx]*nmnths;
-	if(indx==npolcy)
-	{
+	aordc[indx] = tordc / nmnths;
+	ahldc[indx] = H * (aplus / nmnths);
+	ashrc[indx] = p1 * (aminus / nmnths);
+	acost[indx] = aordc[indx] + ahldc[indx] + ashrc[indx];
+	small1[indx] = smalls;
+	big1[indx] = bigs;
+	pri[indx] = money + (initil - invlev) * price - acost[indx] * nmnths;
+	if (indx == npolcy)
+	{ 
 
 
-		printf("==================================report================================\n");
-		printf("initil(initial inventory level)= %d\n",initil);
-		printf("number of demand %d\n",nvalue);
-		for(j=1;j<=nvalue;j++)
-			printf("P(%d) == %.4lf  ",j,pro[j]);
+		printf("================================== report ================================\n");
+		printf("initil(initial inventory level) = %d\n", initil);
+		printf("number of demand %d\n", nvalue);
+		for(j = 1; j <= nvalue; j++)
+			printf("P(%d) == %.4lf  ", j, pro[j]);
 		printf("\n");
-		printf("mean interdemand time %.2lf\n",mdemdt);
-		printf("number of month %d\n",nmnths);
-		printf("K=%.2lf  I=%.2lf  H=%.2lf  PI=%d \n",setupc,incrmc,H,p1);
+		printf("mean interdemand time %.2lf\n", mdemdt);
+		printf("number of month %d\n", nmnths);
+		printf("K=%.2lf  I=%.2lf  H=%.2lf  PI=%d \n", setupc, incrmc, H, p1);
 		printf("policy	  ave_cost	aord_cost	ahold_cost	ave_short	profit\n");
-		for(j=1;j<=npolcy;j++)
+		for(j = 1; j <= npolcy; j++)
 		{
 			printf("(%d,%d)%10.2f%14.2f%16.2f%16.2f%16.2f\n",small1[j],big1[j],acost[j],aordc[j],ahldc[j],ashrc[j],pri[j]);
 		}
