@@ -1,8 +1,8 @@
 library(lattice)  
 
-data = read.table("E:\\data.csv", sep = ",");     # directory of the demand table
-values = as.numeric(unlist(data[1]));             # read demand values
-probs = as.numeric(unlist(data[2]));  				    # read probability
+data = read.table("E:\\data.csv", sep = ",");         # directory of the demand table
+values = as.numeric(unlist(data[1]));                 # read demand values
+probs = as.numeric(unlist(data[2]));                  # read probability
 
 # routine: inventory
 # input: minimum inventory - s, maximum inventory - S
@@ -41,17 +41,17 @@ inventory = function(s,S){
   
   while(t <= T) { 
     L = runif(1, min = 0.5, max = 1);           # random delay time for delivery
-    H = H + h * invlev;                      		# monthly inventory cost
+    H = H + h * invlev;                         # monthly inventory cost
     
     # if delivery arrives
     if(t1 <= t){  
-      C = C + d(amount);                    	# total order cost
+      C = C + d(amount);                        # total order cost
       invlev = invlev + amount;  
       amount = 0;  
-      t1 = Inf;								                # set next deilivery time to infinity
+      t1 = Inf;                                 # set next deilivery time to infinity
     }  
     D = sample(values, 1, T, probs);           	# random demands
-    w = min(D, invlev)                       	# actual purchases
+    w = min(D, invlev)                       	  # actual purchases
     R = R + r * w;  
     
     # if demands above inventory
@@ -65,11 +65,11 @@ inventory = function(s,S){
      # if(d(amount) > budget){
      #   amount = floor((budget - setupc) / incrmc);
      #}
-      t1 = t + L;								               # change next delivery arrival time  
+      t1 = t + L;                                 # change next delivery arrival time  
     }  
     t = t + 1;  
   }  
-  return ((R - C - H - p * loss) / T) 						       # return average monthly net rewards
+  return ((R - C - H - p * loss) / T)             # return average monthly net rewards
 }  
 
 # input bounds of the inventory
@@ -80,7 +80,7 @@ S2 = 100;
 imax = (s2 - s1 + 1) * (S2 - S1 + 1);
 s <- s1 : s2  
 S <- S1 : S2  
-data <- expand.grid(s, S)  						         # combine s and S for plotting
+data <- expand.grid(s, S)                           # combine s and S for plotting
 
 # average 10 times for each combination (s, S)
 for (i in 1 : imax) {  
