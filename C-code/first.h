@@ -57,55 +57,55 @@ int irandi(int z)
 		{
 			res = i + 1;
 		}
-
 	}
 	return res;
 }
 
 /****************************************************************
-* 函数名： 	unifrm()											*
-* 输入参数： double a，double b									*
-* 输出参数： double												*
-* 函数功能：产生[a,b]连续随机数 								*
+* function:		unifrm()				*
+* input:		double a, double b			*
+* output:		double					*
+* description:		create random number between a to b	*
 /***************************************************************/
-double unifrm(double a,double b)
+double unifrm(double a, double b)
 {
-	double u,aa;
-	u=drand(z);
-	aa=a+u*(b-a);
+	double u, aa;
+	u = drand(z);
+	aa = a + u * (b - a);
 	return aa;
-
 }
 
 /****************************************************************
-* 函数名： 	expon()												*
-* 输入参数： double rmean										*
-* 输出参数： double												*
-* 函数功能：生成均值为rmean的指数随机数 						*
+* function:		expon()					*
+* input:		double rmean				*
+* output:		double					*
+* description:		create random exponential number whose	* 
+			means equals to rmean			*
 /***************************************************************/
-double expon( double rmean)
+double expon(double rmean)
 {
-	return -1*rmean*log(drand(1));
+	return -1 * rmean * log(drand(1));
 }
 
 /****************************************************************
-* 函数名： 	update()											*
-* 输入参数： void												*
-* 输出参数： void												*
-* 函数功能：计算库存积分量或者缺货积分量，用于计算相关费用		*
+* function:		update()				*
+* input:		void					*
+* output:		void					*
+* description:		compute integration of the inventory	*
+			or the stockout to obtain relative cost	*
 /***************************************************************/
 void update()
 {
 	double tsle;
-	tsle=time-tlevent;
-	tlevent=time;
-	if(invlev<0)
+	tsle = time - tlevent;
+	tlevent = time;
+	if(invlev < 0)
 	{
-		aminus=aminus+(-1*invlev*tsle);
+		aminus = aminus + (-1 * invlev * tsle);
 	}
 
-	else if(invlev >0)
-		aplus=aplus+(invlev*tsle);
-	//printf("update->  aplus=%f,	aminus=%f\n",aplus,aminus);
+	else if(invlev > 0)
+		aplus = aplus + (invlev * tsle);
+	//printf("update -> aplus = %f, aminus = %f\n", aplus, aminus);
 	return;
 }
