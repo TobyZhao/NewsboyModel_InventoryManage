@@ -1,32 +1,31 @@
 #include <stdlib.h>
 #include <math.h>
 /****************************************************************
-*				parameters						*
-*	amount:			amount of order						*
-*	bigs:			maximum inventory					*
-*	initil: 		initial inventory					*
-*	invlev:			dynamic inventory										*
-*	nevnts: 		number of events										*
-*	next:			next event										*
-*	nmnths：	仿真时间（月）									*
-*	smalls：	无需订货的库存下限								*
-*	npolcy：	策略数目										*
-*	nvalue：	需求量											*
-*	p1:			每件缺货损失费									*
-*	i：			循环变量										*
-*	pro[]：		需求概率密度									*
-*	mdemdt：	平均需求间隔时间								*
-*	setupc：	订货附加费用									*
-*	incrmc：	每件订货费										*
-*	H：			每件每月保管费									*
-*	tne[]：		时间轴，分别记录事件发生的时间					*
+*				parameters				*
+*	amount:			amount of order				*
+*	bigs:			maximum inventory			*
+*	initil: 		initial inventory			*
+*	invlev:			dynamic inventory			*
+*	nevnts: 		number of events			*
+*	next:			next event				*
+*	nmnths:			simulation time (month)			*
+*	smalls:			minimum inventory			*
+*	npolcy:			number of policies			*
+*	nvalue:			demands					*
+*	p1:			cost for stockout - p1/item		*										*
+*	pro[]:			probability density for demands		*
+*	mdemdt:			average interval time of demands	*
+*	setupc:			setup cost				*
+*	incrmc:			order cost - incremc/item		*
+*	H:			storage cost - h/item/month		*
+*	tne[]: 			timeline				*
 /***************************************************************/
-int amount,bigs,initil=60,invlev,nevnts=4,next,nmnths=120,smalls,I,npolcy=4;
-int nvalue=4,i,p1=5,small1[20],big1[20];
-static double pro[99]={0,1.0/6,0.5,0.8330,1};
-double mdemdt=0.1,setupc=32,incrmc=3,H=1,z=1,tne[5],price=10,money=0;
-double aminus,aplus,tlevent,tordc,time;
-double acost[20],ahldc[20],aordc[20],ashrc[20],pri[20];
+int amount, bigs, initil = 60, invlev, nevnts = 4, next, nmnths = 120, smalls, I, npolcy = 4;
+int nvalue = 4, i, p1 = 5, small1[20], big1[20];
+static double pro[99] = {0, 1.0/6, 0.5, 0.8330, 1};
+double mdemdt = 0.1, setupc = 32, incrmc = 3, H = 1, z = 1, tne[5], price = 10, money = 0;
+double aminus, aplus, tlevent, tordc, time;
+double acost[20], ahldc[20], aordc[20], ashrc[20], pri[20];
 
 /****************************************************************
 * 函数名： 	drand()												*
